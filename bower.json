@@ -1,0 +1,25 @@
+{
+  "name": "basicNotification",
+  "version": "1.0.0",
+  "authors": [
+    "Tobias Reich <tobias.reich.ich@gmail.com>"
+  ],
+  "description": "Easy-to-use notification-system for your website or webapp",
+  "main": "dist/basicNotification.min.js",
+  "keywords": [
+    "notification",
+    "notify",
+    "popup",
+    "message"
+  ],
+  "license": "MIT",
+  "homepage": "http://github.com/electerious/basicNotification",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "etc"
+  ]
+}
