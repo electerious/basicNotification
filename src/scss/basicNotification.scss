@@ -2,13 +2,13 @@
 @import 'basics';
 
 /* Animations ------------------------------------------------*/
-@include keyframes(moveDown) {
-	0% {
-		@include vendorize(transform, translateY(-65px));
-	}
-	100% {
-		@include vendorize(transform, translateY(0));
-	}
+@keyframes basicNotificationMoveDown {
+	0% { transform: translateY(-65px); }
+	100% { transform: translateY(0); }
+}
+@keyframes basicNotificationFadeOut {
+	0% { opacity: 1; }
+	100% { opacity: 0 }
 }
 
 /* Notification ------------------------------------------------*/
@@ -16,32 +16,33 @@
 	position: fixed;
 	top: 15px;
 	left: 15px;
-	padding: 15px 15px 14px 15px;
+	padding: 0 15px;
+	height: 50px;
 	background-color: #fff;
 	color: #333;
 	border-radius: 2px;
 	box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px, rgba(0, 0, 0, 0.2) 0px 0px 1px;
 	z-index: 10000;
-	@include vendorize2x(transition, transform $duration $timing);
+	transition: transform $duration $timing;
 
 	/* Animation ------------------------------------------------*/
-	&.fadeIn {
-		@include vendorize(animation, moveDown $duration $timing);
-	}
-
-	&.fadeOut {
-		@include vendorize(animation, fadeOut $duration $timing);
-	}
+	&.fadeIn { animation: basicNotificationMoveDown $duration $timing; }
+	&.fadeOut { animation: basicNotificationFadeOut $duration $timing; }
 
 	/* Icon ------------------------------------------------*/
 	a {
 		float: left;
+		padding: 0;
+		margin: 0;
 		font-size: 21px;
+		line-height: 50px;
 	}
 
 	/* Text ------------------------------------------------*/
 	p {
 		float: left;
+		padding: 0;
 		margin: 2px 0px 0px 15px;
+		line-height: 50px;
 	}
 }
