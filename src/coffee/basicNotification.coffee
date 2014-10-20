@@ -4,24 +4,37 @@ this.notification =
 
 	_valid: (data) ->
 
-		if	data?.icon? and
-			data.text?
+		if data?
 
-				return true
+			###
+			# Set defaults
+			###
+
+			if not data.pin? then		data.pin = false
+			if not data.class? then		data.class = ''
+
+			if	data.icon? or
+				data.icon is ''
+
+					return false
+
+			if	data.text? or
+				data.text is ''
+
+					return false
 
 		return false
 
 	_build: (data) ->
 
 		"""
-		<div class='notification fadeIn' data-id='#{ new Date().getTime() }'>
-			<a class='ion-#{ data.icon }'></a>
+		<div class='notification fadeIn #{ data.class }' data-id='#{ new Date().getTime() }'>
+			<a class='#{ data.icon }'></a>
 			<p>#{ data.text }</p>
 		</div>
 		"""
 
 	_setOffset: (decrease) ->
-
 
 		if notification._data.length isnt 0
 
@@ -41,14 +54,14 @@ this.notification =
 
 	show: (data) ->
 
-		return false if not data? or not notification._valid data
-
-		# Recalculate offset
-		notification._setOffset false
+		return false if not notification._valid data
 
 		# Build
 		html	= notification._build data
 		id		= $(html).data('id')
+
+		# Recalculate offset of existing notifications
+		notification._setOffset false
 
 		# Add
 		notification._data.unshift id
@@ -56,20 +69,23 @@ this.notification =
 
 		# Remove after click
 		$(".notification[data-id='#{ id }']").click ->
+			if data.action? then data.action id
 			notification.close id, true
 
 		# Remove after timeout
-		if not data.pin? or (data.pin? and data.pin is false)
+		if data.pin is false
 			setTimeout ->
 				notification.close id
 			, 5000
+
+		# Call callback
+		callback(id) if data.callback?
 
 		return id
 
 	close: (id, force) ->
 
-		element			= $(".notification[data-id='#{ id }']")
-		elementIndex	= notification._data.indexOf id
+		element = $(".notification[data-id='#{ id }']")
 
 		if $(".notification[data-id='#{ id }']:hover").length isnt 0 and force isnt true
 			# Close later
@@ -82,6 +98,7 @@ this.notification =
 		element.removeClass('fadeIn').addClass('fadeOut')
 		setTimeout ->
 			element.remove()
+			elementIndex = notification._data.indexOf id
 			notification._data.splice elementIndex, 1
 			notification._setOffset true
 			return true
