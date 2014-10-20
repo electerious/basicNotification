@@ -13,12 +13,12 @@ this.notification =
 			if not data.pin? then		data.pin = false
 			if not data.class? then		data.class = ''
 
-			if	data.icon? or
+			if	not data.icon? or
 				data.icon is ''
 
 					return false
 
-			if	data.text? or
+			if	not data.text? or
 				data.text is ''
 
 					return false
