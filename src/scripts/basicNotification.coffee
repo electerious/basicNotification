@@ -4,8 +4,8 @@ this.basicNotification =
 
 	_dom: (id) ->
 
-		if not id? then return $('.basicNotification')
-		else return $(".basicNotification[data-id='#{ id }']")
+		if not id? then	return $('.basicNotification')
+		else			return $(".basicNotification[data-id='#{ id }']")
 
 	_valid: (data) ->
 
@@ -15,11 +15,11 @@ this.basicNotification =
 			# Set defaults
 			###
 
-			if not data.id? then		data.id = new Date().getTime() + Math.round(Math.random()*1000)
-			if not data.pin? then		data.pin = false
-			if not data.class? then		data.class = ''
-			if not data.icon? then		data.icon = ''
-			if not data.text? then		data.text = 'Undefined'
+			if not data.id? then		data.id		= new Date().getTime() + '' + Math.round(Math.random()*1000)
+			if not data.pin? then		data.pin	= false
+			if not data.class? then		data.class	= ''
+			if not data.icon? then		data.icon	= ''
+			if not data.text? then		data.text	= 'Undefined'
 
 			return true
 
