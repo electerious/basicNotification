@@ -25,8 +25,9 @@ Simply include the following files in your HTML:
 Show a context-menu by using the following command:
 
 ```coffee
-loading = notification.show {
+loading = basicNotification.show {
 	icon: 'ios7-clock'
 	text: 'Still loading ...'
+	pin: false
 }
 ```
