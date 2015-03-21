@@ -26,7 +26,7 @@ Show a context-menu by using the following command:
 
 ```coffee
 loading = basicNotification.show {
-	icon: 'ios7-clock'
+	icon: 'ion-clock'
 	text: 'Still loading ...'
 	pin: false
 }
