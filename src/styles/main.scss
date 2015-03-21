@@ -1,0 +1,8 @@
+/* Vars ------------------------------------------------*/
+$basicNotification__zIndex:		10000 !default;
+$basicNotification__duration:	.3s !default;
+$basicNotification__timing:		cubic-bezier(.51, .92, .24, 1.15) !default;
+
+/* Files -----------------------------------------------------*/
+@import 'animations';
+@import 'notification';

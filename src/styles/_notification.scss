@@ -1,18 +1,6 @@
-/* Sass ------------------------------------------------*/
-@import 'basics';
-
-/* Animations ------------------------------------------------*/
-@keyframes basicNotificationMoveDown {
-	0% { transform: translateY(-65px); }
-	100% { transform: translateY(0); }
-}
-@keyframes basicNotificationFadeOut {
-	0% { opacity: 1; }
-	100% { opacity: 0 }
-}
-
 /* Notification ------------------------------------------------*/
-.notification {
+.basicNotification {
+
 	position: fixed;
 	top: 15px;
 	left: 15px;
@@ -22,12 +10,12 @@
 	color: #333;
 	border-radius: 2px;
 	box-shadow: rgba(0, 0, 0, 0.4) 0 1px 2px, rgba(0, 0, 0, 0.2) 0 0 1px;
-	z-index: 10000;
-	transition: transform $duration $timing;
+	z-index: $basicNotification__zIndex;
+	transition: transform $basicNotification__duration $basicNotification__timing;
 
 	/* Animation ------------------------------------------------*/
-	&.fadeIn { animation: basicNotificationMoveDown $duration $timing; }
-	&.fadeOut { animation: basicNotificationFadeOut $duration $timing; }
+	&--fadeIn { animation: basicNotification__moveDown $basicNotification__duration $basicNotification__timing; }
+	&--fadeOut { animation: basicNotification__fadeOut $basicNotification__duration $basicNotification__timing; }
 
 	/* Icon ------------------------------------------------*/
 	a {
@@ -45,4 +33,5 @@
 		margin: 0 0 0 15px;
 		line-height: 50px;
 	}
+
 }

@@ -1,6 +1,11 @@
-this.notification =
+this.basicNotification =
 
 	_data: []
+
+	_dom: (id) ->
+
+		if not id? then return $('.basicNotification')
+		else return $(".basicModal[data-id='#{ id }']")
 
 	_valid: (data) ->
 
@@ -22,7 +27,7 @@ this.notification =
 	_build: (data) ->
 
 		"""
-		<div class='notification fadeIn #{ data.class }' data-id='#{ new Date().getTime() }'>
+		<div class='basicNotification basicNotification--fadeIn #{ data.class }' data-id='#{ new Date().getTime() }'>
 			<a class='#{ data.icon }'></a>
 			<p>#{ data.text }</p>
 		</div>
@@ -30,16 +35,16 @@ this.notification =
 
 	_setOffset: (decrease) ->
 
-		if notification._data.length isnt 0
+		if basicNotification._data.length isnt 0
 
 			# For each notification do ...
-			notification._data.forEach (id, index, array) ->
+			basicNotification._data.forEach (id, index, array) ->
 
-				element	= $(".notification[data-id='#{ id }']")
+				element	= basicNotification._dom(id)
 				height	= parseInt(element.css('top')) + element.outerHeight()
 
-				offset	= height * (index+1) if decrease is false
-				offset	= height * index if decrease is true
+				offset	= height * (index+1)	if decrease is false
+				offset	= height * index		if decrease is true
 
 				# Set new offset
 				element.css '-webkit-transform', "translateY(#{ offset }px)"
@@ -48,28 +53,28 @@ this.notification =
 
 	show: (data) ->
 
-		return false if not notification._valid data
+		return false if not basicNotification._valid data
 
 		# Build
-		html	= notification._build data
+		html	= basicNotification._build data
 		id		= $(html).data('id')
 
 		# Recalculate offset of existing notifications
-		notification._setOffset false
+		basicNotification._setOffset false
 
 		# Add
-		notification._data.unshift id
+		basicNotification._data.unshift id
 		$('body').append html
 
 		# Remove after click
-		$(".notification[data-id='#{ id }']").click ->
+		basicNotification._dom(id).click ->
 			if data.action? then data.action id
-			notification.close id, true
+			basicNotification.close id, true
 
 		# Remove after timeout
 		if data.pin is false
 			setTimeout ->
-				notification.close id
+				basicNotification.close id
 			, 5000
 
 		# Call callback
@@ -79,21 +84,21 @@ this.notification =
 
 	close: (id, force) ->
 
-		element = $(".notification[data-id='#{ id }']")
+		element = basicNotification._dom(id)
 
-		if $(".notification[data-id='#{ id }']:hover").length isnt 0 and force isnt true
+		if $(".basicNotification[data-id='#{ id }']:hover").length isnt 0 and force isnt true
 			# Close later
 			setTimeout ->
-				notification.close id
+				basicNotification.close id
 			, 500
 			return false
 
 		# Fade out and remove
-		element.removeClass('fadeIn').addClass('fadeOut')
+		element.removeClass('basicNotification--fadeIn').addClass('basicNotification--fadeOut')
 		setTimeout ->
 			element.remove()
-			elementIndex = notification._data.indexOf id
-			notification._data.splice elementIndex, 1
-			notification._setOffset true
+			elementIndex = basicNotification._data.indexOf id
+			basicNotification._data.splice elementIndex, 1
+			basicNotification._setOffset true
 			return true
 		, 300

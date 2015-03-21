@@ -1,0 +1,10 @@
+/* Animations ------------------------------------------------*/
+@keyframes basicNotification__moveDown {
+	0% { transform: translateY(-65px); }
+	100% { transform: translateY(0); }
+}
+
+@keyframes basicNotification__fadeOut {
+	0% { opacity: 1; }
+	100% { opacity: 0 }
+}
