@@ -5,7 +5,7 @@ this.basicNotification =
 	_dom: (id) ->
 
 		if not id? then return $('.basicNotification')
-		else return $(".basicModal[data-id='#{ id }']")
+		else return $(".basicNotification[data-id='#{ id }']")
 
 	_valid: (data) ->
 
