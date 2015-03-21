@@ -15,6 +15,7 @@ this.basicNotification =
 			# Set defaults
 			###
 
+			if not data.id? then		data.id = new Date().getTime() + Math.round(Math.random()*1000)
 			if not data.pin? then		data.pin = false
 			if not data.class? then		data.class = ''
 			if not data.icon? then		data.icon = ''
@@ -27,7 +28,7 @@ this.basicNotification =
 	_build: (data) ->
 
 		"""
-		<div class='basicNotification basicNotification--fadeIn #{ data.class }' data-id='#{ new Date().getTime() }'>
+		<div class='basicNotification basicNotification--fadeIn #{ data.class }' data-id='#{ data.id }'>
 			<a class='#{ data.icon }'></a>
 			<p>#{ data.text }</p>
 		</div>
@@ -56,31 +57,30 @@ this.basicNotification =
 		return false if not basicNotification._valid data
 
 		# Build
-		html	= basicNotification._build data
-		id		= $(html).data('id')
+		html = basicNotification._build data
 
 		# Recalculate offset of existing notifications
 		basicNotification._setOffset false
 
 		# Add
-		basicNotification._data.unshift id
+		basicNotification._data.unshift data.id
 		$('body').append html
 
 		# Remove after click
-		basicNotification._dom(id).click ->
-			if data.action? then data.action id
-			basicNotification.close id, true
+		basicNotification._dom(data.id).click ->
+			if data.action? then data.action data.id
+			basicNotification.close data.id, true
 
 		# Remove after timeout
 		if data.pin is false
 			setTimeout ->
-				basicNotification.close id
+				basicNotification.close data.id
 			, 5000
 
 		# Call callback
-		callback(id) if data.callback?
+		callback(data.id) if data.callback?
 
-		return id
+		return data.id
 
 	close: (id, force) ->
 
