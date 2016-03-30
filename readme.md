@@ -1,6 +1,4 @@
-> WARNING: This module has been deprecated.
-
-# basicNotification
+# [Deprecated] basicNotification
 
 Easy-to-use notification-system for your website or webapp.
 
